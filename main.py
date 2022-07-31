@@ -22,7 +22,7 @@ for showRow in showRows:
     end=int(showRow[2])
     start=1
     for episode in range(start,end+1):
-        time.sleep(0.3)
+        time.sleep(0.5)
         # Connect to the URL
         response = requests.get(url+'/'+str(episode))
 
