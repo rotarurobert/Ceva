@@ -20,13 +20,13 @@ showRows= cur.fetchall()
 for showRow in showRows:
     url=root_url+re.sub('[^a-zA-Z0-9 \-\n\.]', '',showRow[1]).strip().replace(' ','-').lower()
     end=int(showRow[2])
-    start = 1
-    for start in range(end+1):
+    start=1
+    for episode in range(start,end+1):
         time.sleep(0.3)
         # Connect to the URL
-        response = requests.get(url+'/'+str(start))
+        response = requests.get(url+'/'+str(episode))
 
-        print(url+'/'+str(start))
+        print(url+'/'+str(episode))
 
         # Parse HTML and save to BeautifulSoup object¶
         soup = BeautifulSoup(response.text, "html.parser")
@@ -53,15 +53,20 @@ for showRow in showRows:
                 found_up = one_a_tag.get('data-src')
 
         if found_fembed:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(start)+",\'"+found_fembed+"\',FALSE)")
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_fembed+"\',FALSE)")
+            print(found_fembed)
         elif found_mega:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(start)+",\'"+found_mega+"\',FALSE)")
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_mega+"\',FALSE)")
+            print(found_mega)
         elif found_vtube:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(start)+",\'"+found_vtube+"\',FALSE)")
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_vtube+"\',FALSE)")
+            print(found_vtube)
         elif found_up:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(start)+",\'"+found_up+"\',FALSE)")
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_up+"\',FALSE)")
+            print(found_up)
         elif found_lare:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(start)+",\'"+found_lare.replace('/e/','/v/')+"\',FALSE)")
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_lare.replace('/e/','/v/')+"\',FALSE)")
+            print(found_lare)
 
 conn.commit()
 cur.close()
