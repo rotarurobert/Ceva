@@ -52,6 +52,12 @@ for showRow in showRows:
             elif "sendvid.com" in one_a_tag.get('data-src'):
                 found_up = one_a_tag.get('data-src')
 
+        print(found_fembed)
+        print(found_mega)
+        print(found_vtube)
+        print(found_up)
+        print(found_lare)
+
         if found_fembed:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_fembed+"\',FALSE)")
             print(found_fembed)
