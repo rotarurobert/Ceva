@@ -30,8 +30,6 @@ for showRow in showRows:
 
         # Parse HTML and save to BeautifulSoup object¶
         soup = BeautifulSoup(response.text, "html.parser")
-        
-        print(soup)
 
         found_fembed = ''
         found_mega = ''
@@ -54,8 +52,6 @@ for showRow in showRows:
             elif "sendvid.com" in one_a_tag.get('data-src'):
                 found_up = one_a_tag.get('data-src')
             print(one_a_tag.get('data-src'))
-        
-        
 
         if found_fembed:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_fembed+"\',FALSE)")
