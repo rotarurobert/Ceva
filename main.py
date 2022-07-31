@@ -30,6 +30,8 @@ for showRow in showRows:
 
         # Parse HTML and save to BeautifulSoup object¶
         soup = BeautifulSoup(response.text, "html.parser")
+        
+        print(soup)
 
         found_fembed = ''
         found_mega = ''
