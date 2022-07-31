@@ -14,9 +14,6 @@ conn=psycopg2.connect(
     host="database"
 )
 
-#https://ak494.anime-kage.eu/ak/anime/kaguya-sama-wa-kokurasetai-ultra-romantic
-#https://ak447.anime-kage.eu/ak/anime/kaguyasama-wa-kokurasetai-ultra-romantic
-
 cur = conn.cursor()
 cur.execute ('select * from "tblShows" where name <> \'One Piece\'')
 showRows= cur.fetchall()
@@ -28,6 +25,9 @@ for showRow in showRows:
         time.sleep(0.3)
         # Connect to the URL
         response = requests.get(url+'/'+str(start))
+
+        print(url+'/'+str(start))
+
         # Parse HTML and save to BeautifulSoup object¶
         soup = BeautifulSoup(response.text, "html.parser")
 

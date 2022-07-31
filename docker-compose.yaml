@@ -1,6 +1,6 @@
 services:
   database:
-    image: postgres
+    image: 579876804135.dkr.ecr.eu-central-1.amazonaws.com/postgres
     ports:
       - "5432:5432"
     restart: always
@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: exampledb
   adminer:
-    image: adminer
+    image: 579876804135.dkr.ecr.eu-central-1.amazonaws.com/adminer
     restart: always
     depends_on:
       - database
