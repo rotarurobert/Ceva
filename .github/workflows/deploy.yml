@@ -17,6 +17,9 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v2
+      run: |
+        echo ${{secrets.AWS_ACCESS_KEY_ID }}
+        echo ${{secrets.AWS_SECRET_ACCESS_KEY }}
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
