@@ -12,10 +12,8 @@ cookie_list=[{"Domain":".anime-kage.eu","expirationDate":"1722439827","hostOnly"
 
 options = Options()
 options.add_argument("--no-sandbox")
-options.add_argument("start-maximized")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--remote-debugging-port=9222")
-options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
 options.headless = True
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
