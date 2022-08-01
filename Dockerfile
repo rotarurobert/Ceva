@@ -27,6 +27,6 @@ RUN apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cy
 RUN apt-get -y install imagemagick x11-apps
 RUN Xvfb -ac :99 -screen 0 1280x1024x16 & export DISPLAY=:99
 
-RUN pip install bs4 psycopg2-binary selenium webdriver_manager
+RUN pip3 install -u bs4 psycopg2-binary selenium webdriver_manager
 
 CMD ["python3",  "./main.py"] 
