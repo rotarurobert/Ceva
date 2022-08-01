@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 import psycopg2
 
-session = HTMLSession(browser_args=["--no-sandbox"])
+session = HTMLSession(executablePath='/usr/bin/google-chrome-stable', headless=True, args=['--no-sandbox'])
 
 root_url = 'https://ak447.anime-kage.eu/ak/anime/'
 
