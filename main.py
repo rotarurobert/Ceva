@@ -2,8 +2,10 @@ import requests
 import time
 import re
 from bs4 import BeautifulSoup
+from requests_html import HTMLSession
 import psycopg2
 
+session = HTMLSession()
 
 root_url = 'https://ak447.anime-kage.eu/ak/anime/'
 
@@ -22,11 +24,11 @@ for showRow in showRows:
     end=int(showRow[2])
     start=1
     for episode in range(start,end+1):
-        time.sleep(0.5)
+        time.sleep(0.3)
         # Connect to the URL
-        response = requests.get(url+'/'+str(episode))
-
-        print(url+'/'+str(episode))
+        response = session.get(url+'/'+str(episode))
+        response.html.render()
+        #print(url+'/'+str(episode))
 
         # Parse HTML and save to BeautifulSoup object¶
         soup = BeautifulSoup(response.text, "html.parser")
@@ -51,12 +53,6 @@ for showRow in showRows:
                 found_up = one_a_tag.get('data-src')
             elif "sendvid.com" in one_a_tag.get('data-src'):
                 found_up = one_a_tag.get('data-src')
-
-        print(found_fembed)
-        print(found_mega)
-        print(found_vtube)
-        print(found_up)
-        print(found_lare)
 
         if found_fembed:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_fembed+"\',FALSE)")
