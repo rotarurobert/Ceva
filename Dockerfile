@@ -12,17 +12,9 @@ RUN apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cy
 RUN apt-get -y install imagemagick x11-apps
 RUN Xvfb -ac :99 -screen 0 1280x1024x16 & export DISPLAY=:99
 
-RUN apt-get update && apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    --no-install-recommends \
-    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update && apt-get install -y \
-    google-chrome-stable \
-    --no-install-recommends
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \ 
+    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN apt-get update && apt-get -y install google-chrome-stable
 
 # # It won't run from the root user.
 # RUN groupadd chrome && useradd -g chrome -s /bin/bash -G audio,video chrome \
@@ -32,7 +24,5 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -U selenium
 RUN pip3 install bs4 psycopg2-binary webdriver_manager
-
-RUN google-chrome 
 
 CMD ["python3",  "./main.py"] 
