@@ -2,7 +2,6 @@ FROM ubuntu
 
 ADD main.py .
 
-RUN echo deb http://archive.ubuntu.com/ubuntu precise universe >> /etc/apt/sources.list
 RUN apt-get update -y
 
 RUN apt-get install -y autoconf \
