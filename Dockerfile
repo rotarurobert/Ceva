@@ -23,6 +23,6 @@ RUN apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2
 
 RUN apt install -y python3 python3-pip
 
-RUN pip install bs4 psycopg2-binary selenium webdriver_manager.chrome webdriver_manager
+RUN pip install bs4 psycopg2-binary selenium webdriver_manager
 
 CMD ["python",  "./main.py"] 
