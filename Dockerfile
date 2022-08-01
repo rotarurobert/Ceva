@@ -11,12 +11,10 @@ RUN apt-get install -y autoconf \
                        vim-tiny
 
 # Python dependencies
-RUN apt-get install -y python \
-                       python-dev \
-                       python-distribute \
-                       python-pip \
-                       ipython
-
+RUN apt-get install -y python3 \
+                       python3-dev \
+                       python3-distribute \
+                       python3-pip
 
 RUN pip install requests_html bs4 psycopg2-binary
 
