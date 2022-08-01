@@ -1,6 +1,20 @@
-FROM python:3.8.13-slim-buster
+FROM ubuntu
 
 ADD main.py .
+
+RUN apt-get install -y autoconf \
+                       build-essential \
+                       curl \
+                       git \
+                       vim-tiny
+
+# Python dependencies
+RUN apt-get install -y python \
+                       python-dev \
+                       python-distribute \
+                       python-pip \
+                       ipython
+
 
 RUN pip install requests_html bs4 psycopg2-binary
 
