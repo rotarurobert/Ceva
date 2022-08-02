@@ -3,19 +3,19 @@ import re
 from bs4 import BeautifulSoup
 import psycopg2
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
 
 cookie_list=[{"Domain":".anime-kage.eu","expirationDate":"1722439827","hostOnly":"false","HttpOnly":"false","name":"_ga","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"GA1.2.1239640000.1654621532"},{"Domain":".anime-kage.eu","expirationDate":"1686159346.329137","hostOnly":"false","HttpOnly":"false","name":"usr","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"Dariusx"},{"Domain":".anime-kage.eu","expirationDate":"1686159346.329165","hostOnly":"false","HttpOnly":"false","name":"usri","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"39989"},{"Domain":".anime-kage.eu","expirationDate":"1686159346.329174","hostOnly":"false","HttpOnly":"false","name":"usrs","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"39989629f8c72bc73d8.08207493"},{"Domain":".anime-kage.eu","expirationDate":"1659454227","hostOnly":"false","HttpOnly":"false","name":"_gid","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"GA1.2.1790831797.1658659233"},{"Domain":".anime-kage.eu","expirationDate":"1692547393","hostOnly":"false","HttpOnly":"false","name":"__gads","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"ID=093d5f48c4e2ff91-229c647edacd0020:T=1658851393:RT=1658851393:S=ALNI_MYZklepPaNHr5I6UtdZ0wTn3PzQjA"},{"Domain":"ak497.anime-kage.eu","hostOnly":"true","HttpOnly":"false","name":"PHPSESSID","path":"/","sameSite":"Lax","Secure":"false","session":"true","storeId":"0","value":"rf0mbuit1rkbi2b95th3urrsud"},{"Domain":"ak497.anime-kage.eu","expirationDate":"1690873447.286612","hostOnly":"true","HttpOnly":"false","name":"cdd","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"1"},{"Domain":".anime-kage.eu","expirationDate":"1690903827","hostOnly":"false","HttpOnly":"false","name":"lastVisit","path":"/","sameSite":"Lax","Secure":"false","session":"false","storeId":"0","value":"1659367827"}]
 
-options = Options()
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--remote-debugging-port=9222")
-options.headless = True
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_prefs = {}
+chrome_options.experimental_options["prefs"] = chrome_prefs
+chrome_prefs["profile.default_content_settings"] = {"images": 2}
+driver = webdriver.Chrome(options=chrome_options)
 
 driver.get('https://ak496.anime-kage.eu')
 
@@ -89,4 +89,4 @@ for showRow in showRows:
 conn.commit()
 cur.close()
 conn.close()
-
+driver.close()

@@ -1,28 +1,32 @@
-FROM ubuntu
+FROM python:3.8
 
 ADD main.py .
 
-RUN apt-get update
-RUN apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget libgbm1
+# Adding trusting keys to apt for repositories
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
-RUN apt install -y python3 python3-pip
-RUN apt-get -y install xvfb
-RUN apt-get -y install gtk2-engines-pixbuf
-RUN apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable
-RUN apt-get -y install imagemagick x11-apps
-RUN Xvfb -ac :99 -screen 0 1280x1024x16 & export DISPLAY=:99
+# Adding Google Chrome to the repositories
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \ 
-    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-RUN apt-get update && apt-get -y install google-chrome-stable
+# Updating apt to see and install Google Chrome
+RUN apt-get -y update
 
-# # It won't run from the root user.
-# RUN groupadd chrome && useradd -g chrome -s /bin/bash -G audio,video chrome \
-#     && mkdir -p /home/chrome && chown -R chrome:chrome /home/chrome
+# Magic happens
+RUN apt-get install -y google-chrome-stable
 
+RUN apt-get install -yqq unzip
 
+# Download the Chrome Driver
+RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/ curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE/chromedriver_linux64.zip
 
-RUN pip3 install -U selenium
-RUN pip3 install bs4 psycopg2-binary webdriver_manager
+# Unzip the Chrome Driver into /usr/local/bin directory
+RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
-CMD ["python3",  "./main.py"] 
+# Set display port as an environment variable
+ENV DISPLAY=:99
+
+RUN pip install --upgrade pip
+RUN pip install -U selenium
+RUN pip install bs4 psycopg2-binary webdriver_manager
+
+CMD ["python",  "./main.py"] 
