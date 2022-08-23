@@ -68,7 +68,7 @@ for showRow in showRows:
                 elif "upstream.to" in one_a_tag.get('data-src'):
                     found_up = one_a_tag.get('data-src')
                 elif "sendvid.com" in one_a_tag.get('data-src'):
-                    found_up = one_a_tag.get('data-src')
+                    found_sendvid = one_a_tag.get('data-src')
 
         if found_fembed:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_fembed+"\',FALSE)")
@@ -76,9 +76,9 @@ for showRow in showRows:
         elif found_mega:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_mega+"\',FALSE)")
             print(found_mega)
-        elif found_vtube:
-            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_vtube+"\',FALSE)")
-            print(found_vtube)
+        elif found_sendvid:
+            cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_sendvid+"\',FALSE)")
+            print(found_sendvid)
         elif found_up:
             cur.execute("insert into \"tblLinks\" (show_id,episode,link,downloaded) VALUES ("+str(showRow[0])+","+str(episode)+",\'"+found_up+"\',FALSE)")
             print(found_up)
